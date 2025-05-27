@@ -1,0 +1,6 @@
+neat-python
+pandas
+matplotlib
+scikit-learn
+umap-learn
+requests
