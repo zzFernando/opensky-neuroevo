@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_61fad5aa5d564068f20cd05a9fc629ad {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-ant-path@1.1.2/dist/leaflet-ant-path.min.js"></script>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_61fad5aa5d564068f20cd05a9fc629ad" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_61fad5aa5d564068f20cd05a9fc629ad = L.map(
+                "map_61fad5aa5d564068f20cd05a9fc629ad",
+                {
+                    center: [7.108547705131573, -63.71693295906136],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_7c6185eae199b8f72e926c269a13e645 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_7c6185eae199b8f72e926c269a13e645.addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            ant_path_9d9fd97dac9daa5a073ccc34e25c1def = L.polyline.antPath(
+              [[7.118592576063675, -63.79729038068028], [7.118324553332776, -63.79539546297942], [7.1181940895290206, -63.79290476231035], [7.117251061243893, -63.78669577021606], [7.115650957372189, -63.773265214937915], [7.113558459341494, -63.757027553032145], [7.11212724047827, -63.745676341839506], [7.111105785512327, -63.737218926230994], [7.1106377458742855, -63.73360116972416], [7.109417378926839, -63.72398228868338], [7.109300469413472, -63.72173248856901], [7.108855598848571, -63.71946559442216], [7.108162578114331, -63.71298543043001], [7.107053188278026, -63.705474586360914], [7.1064616550241215, -63.70019765369485], [7.10583124508982, -63.69580660846732], [7.105294956599894, -63.6917297239312], [7.103944527189209, -63.68035456847229], [7.103849310242008, -63.679447008634234], [7.102654633184922, -63.67007620219662], [7.102310943323864, -63.666846510775954], [7.101799838848221, -63.663791899982314], [7.101404517236505, -63.65936140986419], [7.10110143177703, -63.65704890194099], [7.100807887444574, -63.655947518157724]],
+              {
+  "stroke": true,
+  "color": "blue",
+  "weight": 4,
+  "opacity": 0.5,
+  "lineCap": "round",
+  "lineJoin": "round",
+  "dashArray": [
+10,
+20,
+],
+  "dashOffset": null,
+  "fill": false,
+  "fillColor": "blue",
+  "fillOpacity": 0.2,
+  "fillRule": "evenodd",
+  "bubblingMouseEvents": true,
+  "smoothFactor": 1.0,
+  "noClip": false,
+  "paused": false,
+  "reverse": false,
+  "hardwareAcceleration": false,
+  "delay": 400,
+  "pulseColor": "#FFFFFF",
+}
+        ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var marker_4d5cf5310cf348e94bea09faa8cf61f5 = L.marker(
+                [7.118592576063675, -63.79729038068028],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var div_icon_ce6dfe7971aa570153f57d470d620c28 = L.divIcon({
+  "html": "\u003cdiv style=\u0027font-size: 24px;\u0027\u003e\u2708\ufe0f\u003c/div\u003e",
+  "className": "empty",
+});
+        
+    
+        var popup_621e3d6ce59da491fa81c1b771eb079f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_65db148abb6a687e78eb81dd79d85a6b = $(`<div id="html_65db148abb6a687e78eb81dd79d85a6b" style="width: 100.0%; height: 100.0%;">Início</div>`)[0];
+                popup_621e3d6ce59da491fa81c1b771eb079f.setContent(html_65db148abb6a687e78eb81dd79d85a6b);
+            
+        
+
+        marker_4d5cf5310cf348e94bea09faa8cf61f5.bindPopup(popup_621e3d6ce59da491fa81c1b771eb079f)
+        ;
+
+        
+    
+    
+                marker_4d5cf5310cf348e94bea09faa8cf61f5.setIcon(div_icon_ce6dfe7971aa570153f57d470d620c28);
+            
+    
+            var marker_61b2eb04387e298f2cf5d40dc77dcfb6 = L.marker(
+                [-23.4356, -46.4731],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_11837b64ca0832d9409e144c0520b87e = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_55e706d13c6f8fd041651f1bb370600b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_291ff0dc0f2f1dc97a2159eb23618ecf = $(`<div id="html_291ff0dc0f2f1dc97a2159eb23618ecf" style="width: 100.0%; height: 100.0%;">GRU - São Paulo/Guarulhos</div>`)[0];
+                popup_55e706d13c6f8fd041651f1bb370600b.setContent(html_291ff0dc0f2f1dc97a2159eb23618ecf);
+            
+        
+
+        marker_61b2eb04387e298f2cf5d40dc77dcfb6.bindPopup(popup_55e706d13c6f8fd041651f1bb370600b)
+        ;
+
+        
+    
+    
+                marker_61b2eb04387e298f2cf5d40dc77dcfb6.setIcon(icon_11837b64ca0832d9409e144c0520b87e);
+            
+    
+            var marker_4ab83f4f3f66f238fc7541f45aaa6c19 = L.marker(
+                [-34.8222, -58.5358],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_53ca2687a8a93a6d8ee162d3155654b2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f887a729fdfbf9c9eab1e28df18e985 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5dc0c926ab37d3d508fa2dae6170a819 = $(`<div id="html_5dc0c926ab37d3d508fa2dae6170a819" style="width: 100.0%; height: 100.0%;">EZE - Buenos Aires/Ezeiza</div>`)[0];
+                popup_1f887a729fdfbf9c9eab1e28df18e985.setContent(html_5dc0c926ab37d3d508fa2dae6170a819);
+            
+        
+
+        marker_4ab83f4f3f66f238fc7541f45aaa6c19.bindPopup(popup_1f887a729fdfbf9c9eab1e28df18e985)
+        ;
+
+        
+    
+    
+                marker_4ab83f4f3f66f238fc7541f45aaa6c19.setIcon(icon_53ca2687a8a93a6d8ee162d3155654b2);
+            
+    
+            var marker_0a6cf39cb58c18e846a9017191735fd5 = L.marker(
+                [4.7016, -74.1469],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_7911bbf40c89f8d0e22d1dfb0d27b77a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_acc86c401f0c33e204f58e64526fb406 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_51b67d6c309b24b8d6b9febc9096703a = $(`<div id="html_51b67d6c309b24b8d6b9febc9096703a" style="width: 100.0%; height: 100.0%;">BOG - Bogotá/El Dorado</div>`)[0];
+                popup_acc86c401f0c33e204f58e64526fb406.setContent(html_51b67d6c309b24b8d6b9febc9096703a);
+            
+        
+
+        marker_0a6cf39cb58c18e846a9017191735fd5.bindPopup(popup_acc86c401f0c33e204f58e64526fb406)
+        ;
+
+        
+    
+    
+                marker_0a6cf39cb58c18e846a9017191735fd5.setIcon(icon_7911bbf40c89f8d0e22d1dfb0d27b77a);
+            
+    
+            var marker_5832aba30cf6920a3fff83d69e637a12 = L.marker(
+                [-33.393, -70.7858],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_e8299f598003f4c15bc36def45186ecb = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_977ee16ffdbc28c155420a22fac67152 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8b69022c17143f14b344c65a5ddadae6 = $(`<div id="html_8b69022c17143f14b344c65a5ddadae6" style="width: 100.0%; height: 100.0%;">SCL - Santiago/Arturo Merino Benítez</div>`)[0];
+                popup_977ee16ffdbc28c155420a22fac67152.setContent(html_8b69022c17143f14b344c65a5ddadae6);
+            
+        
+
+        marker_5832aba30cf6920a3fff83d69e637a12.bindPopup(popup_977ee16ffdbc28c155420a22fac67152)
+        ;
+
+        
+    
+    
+                marker_5832aba30cf6920a3fff83d69e637a12.setIcon(icon_e8299f598003f4c15bc36def45186ecb);
+            
+    
+            var marker_30ec0c2ef1ccf05b03e6089b054be719 = L.marker(
+                [-12.0219, -77.1143],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_c116f795feef1cffbbfeb70d750c453b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_496ded5555b02bf8f80a3d67c1fd5182 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b7c3b665a328f1da793fde09a45a612a = $(`<div id="html_b7c3b665a328f1da793fde09a45a612a" style="width: 100.0%; height: 100.0%;">LIM - Lima/Jorge Chávez</div>`)[0];
+                popup_496ded5555b02bf8f80a3d67c1fd5182.setContent(html_b7c3b665a328f1da793fde09a45a612a);
+            
+        
+
+        marker_30ec0c2ef1ccf05b03e6089b054be719.bindPopup(popup_496ded5555b02bf8f80a3d67c1fd5182)
+        ;
+
+        
+    
+    
+                marker_30ec0c2ef1ccf05b03e6089b054be719.setIcon(icon_c116f795feef1cffbbfeb70d750c453b);
+            
+    
+            var marker_e0dd924f5bba4c7367b2250029d61835 = L.marker(
+                [9.0714, -79.3835],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_0aa6d4d287c00c2ecf46f5b8764004c9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3a9bbf62c9c48b32d1bcf688422abc16 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d91cb1f2b7ca248ec788b90ff39d5537 = $(`<div id="html_d91cb1f2b7ca248ec788b90ff39d5537" style="width: 100.0%; height: 100.0%;">PTY - Cidade do Panamá/Tocumen</div>`)[0];
+                popup_3a9bbf62c9c48b32d1bcf688422abc16.setContent(html_d91cb1f2b7ca248ec788b90ff39d5537);
+            
+        
+
+        marker_e0dd924f5bba4c7367b2250029d61835.bindPopup(popup_3a9bbf62c9c48b32d1bcf688422abc16)
+        ;
+
+        
+    
+    
+                marker_e0dd924f5bba4c7367b2250029d61835.setIcon(icon_0aa6d4d287c00c2ecf46f5b8764004c9);
+            
+    
+            var marker_ff87f555906513e9374318e576f50b81 = L.marker(
+                [19.4361, -99.0719],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_6ade8847fff7b4c19c8ec1f42866c43f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d18baa0a326b1fa54cab9ef5abe8870c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_859a85f759ee0e5dabbcd7dc59c2755f = $(`<div id="html_859a85f759ee0e5dabbcd7dc59c2755f" style="width: 100.0%; height: 100.0%;">MEX - Cidade do México/B. Juárez</div>`)[0];
+                popup_d18baa0a326b1fa54cab9ef5abe8870c.setContent(html_859a85f759ee0e5dabbcd7dc59c2755f);
+            
+        
+
+        marker_ff87f555906513e9374318e576f50b81.bindPopup(popup_d18baa0a326b1fa54cab9ef5abe8870c)
+        ;
+
+        
+    
+    
+                marker_ff87f555906513e9374318e576f50b81.setIcon(icon_6ade8847fff7b4c19c8ec1f42866c43f);
+            
+    
+            var marker_1bc905e228ab4975f4f8bb1ba15d8bf1 = L.marker(
+                [-22.809, -43.2506],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_228061f1d4c8864fc78e59d9263a893a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ac2649ae28c51c8afd1a5c6c8041be46 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68857bf75dfab8da48ec8cd653a0a4d5 = $(`<div id="html_68857bf75dfab8da48ec8cd653a0a4d5" style="width: 100.0%; height: 100.0%;">GIG - Rio de Janeiro/Galeão</div>`)[0];
+                popup_ac2649ae28c51c8afd1a5c6c8041be46.setContent(html_68857bf75dfab8da48ec8cd653a0a4d5);
+            
+        
+
+        marker_1bc905e228ab4975f4f8bb1ba15d8bf1.bindPopup(popup_ac2649ae28c51c8afd1a5c6c8041be46)
+        ;
+
+        
+    
+    
+                marker_1bc905e228ab4975f4f8bb1ba15d8bf1.setIcon(icon_228061f1d4c8864fc78e59d9263a893a);
+            
+    
+            var marker_21e31e3fe8a6c66a0165454ee8c1bc4a = L.marker(
+                [21.0365, -86.8771],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_0e083d1814b9399d4fa8972be490f5e8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a63577ce02e54119dc6dccc6089feb87 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_15275a4f89f042fcb138ffbded2d6c64 = $(`<div id="html_15275a4f89f042fcb138ffbded2d6c64" style="width: 100.0%; height: 100.0%;">CUN - Cancún International</div>`)[0];
+                popup_a63577ce02e54119dc6dccc6089feb87.setContent(html_15275a4f89f042fcb138ffbded2d6c64);
+            
+        
+
+        marker_21e31e3fe8a6c66a0165454ee8c1bc4a.bindPopup(popup_a63577ce02e54119dc6dccc6089feb87)
+        ;
+
+        
+    
+    
+                marker_21e31e3fe8a6c66a0165454ee8c1bc4a.setIcon(icon_0e083d1814b9399d4fa8972be490f5e8);
+            
+    
+            var marker_de5d7d6b3a39b1a2b26ab6175485d511 = L.marker(
+                [-3.7763, -38.5326],
+                {
+}
+            ).addTo(map_61fad5aa5d564068f20cd05a9fc629ad);
+        
+    
+            var icon_8af1214a56db026a0fec99c07ff5c3aa = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ff23d55def109bcd6b78794537d14ecd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fd52bc61b681b92b3700c02512c77689 = $(`<div id="html_fd52bc61b681b92b3700c02512c77689" style="width: 100.0%; height: 100.0%;">FOR - Fortaleza/Pinto Martins</div>`)[0];
+                popup_ff23d55def109bcd6b78794537d14ecd.setContent(html_fd52bc61b681b92b3700c02512c77689);
+            
+        
+
+        marker_de5d7d6b3a39b1a2b26ab6175485d511.bindPopup(popup_ff23d55def109bcd6b78794537d14ecd)
+        ;
+
+        
+    
+    
+                marker_de5d7d6b3a39b1a2b26ab6175485d511.setIcon(icon_8af1214a56db026a0fec99c07ff5c3aa);
+            
+</script>
+</html>
