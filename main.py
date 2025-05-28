@@ -9,7 +9,15 @@ import pandas as pd
 
 def main():
     print("\n🔄 Baixando dados do OpenSky Network...")
-    df_raw = fetch_opensky_data(-25.0, -48.0, -22.0, -44.0, pages=50) # São Paulo
+    
+    df_raw = fetch_opensky_data(
+    lamin=-35.0,    # Latitude mínima (ex: sul da Argentina)
+    lomin=-85.0,    # Longitude mínima (ex: oeste da América do Sul)
+    lamax=15.0,     # Latitude máxima (ex: Caribe ou México)
+    lomax=-30.0,    # Longitude máxima (litoral do Brasil)
+    pages=40,
+    delay=1.5
+    )
 
     print("\n🧹 Processando dados...")
     df_proc = preprocess_flight_data(df_raw)
