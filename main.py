@@ -2,30 +2,29 @@
 
 from src.fetch_data import fetch_opensky_data
 from src.preprocess import preprocess_flight_data
-from src.neat_train import run_neat
-from src.visualize import plot_umap, load_data
+from src.flight_rl_env import simulate_evolutionary_navigation
+from src.map_visualization import plot_flight_on_map
 import os
 import pandas as pd
 
-
 def main():
     print("\n🔄 Baixando dados do OpenSky Network...")
-    df_raw = fetch_opensky_data(-23.7, -46.8, -23.3, -46.3)  # São Paulo
+    df_raw = fetch_opensky_data(-25.0, -48.0, -22.0, -44.0, pages=50) # São Paulo
 
     print("\n🧹 Processando dados...")
     df_proc = preprocess_flight_data(df_raw)
+    print(f"Total de registros após o pré-processamento: {len(df_proc)}")
+    print("📊 Colunas disponíveis:", df_proc.columns.tolist())
+
     os.makedirs("data", exist_ok=True)
     df_proc.to_csv("data/flights_sample.csv", index=False)
     print("✔️ Dados salvos em data/flights_sample.csv")
 
-    print("\n🧠 Treinando com NEAT...")
-    config_path = os.path.join("config", "neat-config.txt")
-    run_neat(config_path)
+    print("\n🚀 Simulando navegação evolutiva...")
+    simulate_evolutionary_navigation(df_proc)
 
-    print("\n🖼️ Gerando visualização UMAP...")
-    X, y = load_data()
-    plot_umap(X, y)
-
+    trajectory_coords = df_proc[['latitude', 'longitude']].dropna().values.tolist()
+    plot_flight_on_map(trajectory_coords)
 
 if __name__ == "__main__":
     main()
