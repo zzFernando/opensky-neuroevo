@@ -1,38 +1,40 @@
 # main.py
 
-from src.fetch_data import fetch_opensky_data
-from src.preprocess import preprocess_flight_data
-from src.flight_rl_env import simulate_evolutionary_navigation
-from src.map_visualization import plot_flight_on_map
-import os
-import pandas as pd
+import logging
+from evolution import load_airports, get_airport_by_iata, evolutionary_route
+from visualizer import plot_route_on_map, plot_evolution_on_map
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def main():
-    print("\n🔄 Baixando dados do OpenSky Network...")
-    
-    df_raw = fetch_opensky_data(
-    lamin=-35.0,    # Latitude mínima (ex: sul da Argentina)
-    lomin=-85.0,    # Longitude mínima (ex: oeste da América do Sul)
-    lamax=15.0,     # Latitude máxima (ex: Caribe ou México)
-    lomax=-30.0,    # Longitude máxima (litoral do Brasil)
-    pages=40,
-    delay=1.5
-    )
-
-    print("\n🧹 Processando dados...")
-    df_proc = preprocess_flight_data(df_raw)
-    print(f"Total de registros após o pré-processamento: {len(df_proc)}")
-    print("📊 Colunas disponíveis:", df_proc.columns.tolist())
-
-    os.makedirs("data", exist_ok=True)
-    df_proc.to_csv("data/flights_sample.csv", index=False)
-    print("✔️ Dados salvos em data/flights_sample.csv")
-
-    print("\n🚀 Simulando navegação evolutiva...")
-    simulate_evolutionary_navigation(df_proc)
-
-    trajectory_coords = df_proc[['latitude', 'longitude']].dropna().values.tolist()
-    plot_flight_on_map(trajectory_coords)
+    # Carrega aeroportos
+    airports = load_airports()
+    print("Aeroportos disponíveis:")
+    print(airports[['IATA', 'Nome']])
+    # Seleção de origem e destino
+    origem = input("Digite o IATA do aeroporto de origem (ex: POA): ").strip().upper()
+    destino = input("Digite o IATA do aeroporto de destino (ex: CGH): ").strip().upper()
+    a1 = get_airport_by_iata(airports, origem)
+    a2 = get_airport_by_iata(airports, destino)
+    start = (a1['Latitude'], a1['Longitude'])
+    end = (a2['Latitude'], a2['Longitude'])
+    # Limites para geração de waypoints
+    bounds = {
+        'lat_min': min(a1['Latitude'], a2['Latitude']) - 2,
+        'lat_max': max(a1['Latitude'], a2['Latitude']) + 2,
+        'lon_min': min(a1['Longitude'], a2['Longitude']) - 2,
+        'lon_max': max(a1['Longitude'], a2['Longitude']) + 2,
+    }
+    # Executa algoritmo evolutivo
+    best_route, best_per_gen = evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=40, generations=60)
+    print("Melhor rota encontrada:")
+    for i, wp in enumerate(best_route):
+        print(f"WP{i}: {wp}")
+    # Visualização
+    plot_route_on_map(best_route, airports)
+    plot_evolution_on_map(best_per_gen, airports)
 
 if __name__ == "__main__":
     main()
