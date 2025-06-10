@@ -2,6 +2,7 @@ import numpy as np
 import random
 import pandas as pd
 from math import radians, sin, cos, sqrt, atan2
+from typing import List, Tuple
 
 def load_airports(filepath="data/airports.csv"):
     return pd.read_csv(filepath)
@@ -40,10 +41,37 @@ def angle_penalty(route):
             penalty += (np.deg2rad(60) - angle)
     return penalty
 
-def fitness(route):
+
+def zone_penalty(route: List[Tuple[float, float]], zones: List[Tuple[float, float, float]]) -> float:
+    """Penalize routes that pass through restricted circular zones."""
+    if not zones:
+        return 0.0
+
+    def point_segment_distance(p, a, b):
+        # p, a, b are (lat, lon)
+        pa = np.array([p[0] - a[0], p[1] - a[1]])
+        ba = np.array([b[0] - a[0], b[1] - a[1]])
+        h = np.clip(np.dot(pa, ba) / np.dot(ba, ba), 0.0, 1.0)
+        d = pa - h * ba
+        return np.linalg.norm(d)
+
+    penalty = 0.0
+    for lat_c, lon_c, rad in zones:
+        center = (lat_c, lon_c)
+        for i in range(len(route) - 1):
+            a = route[i]
+            b = route[i + 1]
+            dist = point_segment_distance(center, a, b)
+            if dist < rad / 111:  # approximate conversion km -> degrees
+                penalty += (rad - dist * 111)
+                break
+    return penalty
+
+def fitness(route: List[Tuple[float, float]], zones: List[Tuple[float, float, float]] = None) -> float:
     dist = route_distance(route)
-    penalty = angle_penalty(route)
-    return dist + 100 * penalty  # peso ajustável para penalização
+    angle = angle_penalty(route)
+    zone = zone_penalty(route, zones or [])
+    return dist + 100 * angle + 1000 * zone
 
 def random_waypoint(bounds):
     lat = random.uniform(bounds['lat_min'], bounds['lat_max'])
@@ -66,11 +94,11 @@ def crossover(parent1, parent2):
     child = parent1[:cut] + parent2[cut:]
     return child
 
-def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generations=50):
+def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generations=50, zones: List[Tuple[float, float, float]] = None):
     pop = [create_individual(start, end, n_waypoints, bounds) for _ in range(pop_size)]
     best_per_gen = []
     for gen in range(generations):
-        scored = [(ind, fitness(ind)) for ind in pop]
+        scored = [(ind, fitness(ind, zones)) for ind in pop]
         scored.sort(key=lambda x: x[1])
         best = scored[0][0]
         best_per_gen.append(best)
@@ -82,6 +110,6 @@ def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generatio
             child = mutate(child, bounds)
             children.append(child)
         pop = children
-    scored = [(ind, fitness(ind)) for ind in pop]
+    scored = [(ind, fitness(ind, zones)) for ind in pop]
     scored.sort(key=lambda x: x[1])
-    return scored[0][0], best_per_gen 
+    return scored[0][0], best_per_gen
