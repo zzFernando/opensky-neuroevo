@@ -89,6 +89,12 @@ pip install -r requirements.txt
 python main.py
 ```
 
+5. Launch the interactive explorer:
+
+```bash
+streamlit run app.py
+```
+
 ---
 
 ## 🛬 Airports Configuration

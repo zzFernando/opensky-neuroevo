@@ -73,6 +73,22 @@ def fitness(route: List[Tuple[float, float]], zones: List[Tuple[float, float, fl
     zone = zone_penalty(route, zones or [])
     return dist + 100 * angle + 1000 * zone
 
+
+def evaluate_route(
+    route: List[Tuple[float, float]],
+    zones: List[Tuple[float, float, float]] | None = None,
+) -> dict:
+    """Return detailed fitness components for a route."""
+    dist = route_distance(route)
+    angle = angle_penalty(route)
+    zone = zone_penalty(route, zones or [])
+    return {
+        "distance": dist,
+        "angle_penalty": angle,
+        "zone_penalty": zone,
+        "fitness": dist + 100 * angle + 1000 * zone,
+    }
+
 def random_waypoint(bounds):
     lat = random.uniform(bounds['lat_min'], bounds['lat_max'])
     lon = random.uniform(bounds['lon_min'], bounds['lon_max'])
