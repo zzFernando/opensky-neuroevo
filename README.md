@@ -55,7 +55,7 @@ opensky-neuroevo/
 ├── README.md
 └── main.py
 
-````
+```
 
 ---
 
@@ -66,7 +66,7 @@ opensky-neuroevo/
 ```bash
 python -m venv venv
 source venv/bin/activate
-````
+```
 
 2. Install dependencies:
 
