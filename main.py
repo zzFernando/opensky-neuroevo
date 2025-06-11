@@ -1,6 +1,7 @@
 # main.py
 
 import logging
+import argparse
 from evolution import load_airports, get_airport_by_iata, evolutionary_route
 from visualizer import plot_route_on_map, plot_evolution_on_map
 from synthetic_data import generate_storms, generate_flights
@@ -10,13 +11,14 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def main():
-    # Carrega aeroportos
+    parser = argparse.ArgumentParser(description="Gerar rotas usando algoritmo genético")
+    parser.add_argument("origem", nargs="?", default="POA", help="IATA da origem")
+    parser.add_argument("destino", nargs="?", default="GIG", help="IATA do destino")
+    args = parser.parse_args()
+
     airports = load_airports()
-    print("Aeroportos disponíveis:")
-    print(airports[['IATA', 'Nome']])
-    # Seleção de origem e destino
-    origem = input("Digite o IATA do aeroporto de origem (ex: POA): ").strip().upper()
-    destino = input("Digite o IATA do aeroporto de destino (ex: CGH): ").strip().upper()
+    origem = args.origem.upper()
+    destino = args.destino.upper()
     a1 = get_airport_by_iata(airports, origem)
     a2 = get_airport_by_iata(airports, destino)
     start = (a1['Latitude'], a1['Longitude'])
@@ -32,7 +34,7 @@ def main():
     flights = generate_flights(3, bounds, n_points=6)
     zones = storms + [(lat, lon, 10) for path in flights for (lat, lon) in path]
     # Executa algoritmo evolutivo
-    best_route, best_per_gen = evolutionary_route(
+    best_route, best_per_gen, _ = evolutionary_route(
         start,
         end,
         bounds,

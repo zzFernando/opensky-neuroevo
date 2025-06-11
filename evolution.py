@@ -111,13 +111,20 @@ def crossover(parent1, parent2):
     return child
 
 def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generations=50, zones: List[Tuple[float, float, float]] = None):
+    """Evolve a route using a simple genetic algorithm.
+
+    Returns the best route found, a list of the best route from each generation,
+    and the corresponding fitness values for those routes.
+    """
     pop = [create_individual(start, end, n_waypoints, bounds) for _ in range(pop_size)]
-    best_per_gen = []
+    best_per_gen: List[List[tuple]] = []
+    best_scores: List[float] = []
     for gen in range(generations):
         scored = [(ind, fitness(ind, zones)) for ind in pop]
         scored.sort(key=lambda x: x[1])
         best = scored[0][0]
         best_per_gen.append(best)
+        best_scores.append(scored[0][1])
         survivors = [ind for ind, _ in scored[:pop_size//2]]
         children = []
         while len(children) < pop_size:
@@ -128,4 +135,5 @@ def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generatio
         pop = children
     scored = [(ind, fitness(ind, zones)) for ind in pop]
     scored.sort(key=lambda x: x[1])
-    return scored[0][0], best_per_gen
+    best_scores.append(scored[0][1])
+    return scored[0][0], best_per_gen, best_scores

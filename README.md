@@ -83,17 +83,15 @@ pip install -r requirements.txt
 }
 ```
 
-4. Run the main pipeline:
-
-```bash
-python main.py
-```
-
-5. Launch the interactive explorer:
+4. Launch the interactive explorer:
 
 ```bash
 streamlit run app.py
 ```
+
+The Streamlit interface allows you to configure algorithm parameters,
+generate synthetic storms and flights, and visualize the route evolution
+without any terminal interaction.
 
 ---
 
