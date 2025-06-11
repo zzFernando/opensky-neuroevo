@@ -91,7 +91,9 @@ streamlit run app.py
 
 The Streamlit interface allows you to configure algorithm parameters,
 generate synthetic storms and flights, and visualize the route evolution
-without any terminal interaction.
+without any terminal interaction. After each run you can inspect the
+fitness progression and detailed metrics for every generation directly
+in the browser.
 
 ---
 

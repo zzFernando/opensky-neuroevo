@@ -48,12 +48,14 @@ def run_evolution():
         generations=generations,
         zones=zones,
     )
+    evals = [evaluate_route(r, zones) for r in best_per_gen]
     st.session_state.result = {
         "best_per_gen": best_per_gen,
         "storms": storms,
         "flights": flights,
         "zones": zones,
         "scores": scores,
+        "evals": evals,
     }
 
 if st.button("Executar Evolução"):
@@ -70,7 +72,7 @@ if "result" in st.session_state:
         len(res["best_per_gen"]),
     )
     route = res["best_per_gen"][gen - 1]
-    metrics = evaluate_route(route, res["zones"])
+    metrics = res["evals"][gen - 1]
     st.markdown(
         f"**Distância:** {metrics['distance']:.1f} km\n\n"
         f"**Angulo penalização:** {metrics['angle_penalty']:.2f}\n\n"
@@ -78,4 +80,8 @@ if "result" in st.session_state:
     )
     m = create_route_map(route, airports, zones=res["storms"], flights=res["flights"])
     st_folium(m, width=700, height=500)
+    st.subheader("Métricas por geração")
+    import pandas as pd
+    df = pd.DataFrame(res["evals"]).assign(Geração=lambda d: d.index + 1)
+    st.dataframe(df.set_index("Geração"))
 
