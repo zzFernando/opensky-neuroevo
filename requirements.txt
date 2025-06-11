@@ -1,6 +1,7 @@
 numpy
 neat-python
 pandas
+numpy
 matplotlib
 scikit-learn
 umap-learn
@@ -10,4 +11,6 @@ pydantic>=2.0.0
 pydantic-settings>=2.0.0
 python-dotenv>=1.0.0
 streamlit
+streamlit-folium
+fastapi>=0.110
 streamlit-folium
