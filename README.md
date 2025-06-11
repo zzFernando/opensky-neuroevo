@@ -83,10 +83,12 @@ pip install -r requirements.txt
 }
 ```
 
-4. Launch the interactive explorer:
+4. Launch the interactive explorer (Streamlit):
 
 ```bash
 streamlit run app.py
+# or
+python main.py --ui
 ```
 
 The Streamlit interface allows you to configure algorithm parameters,

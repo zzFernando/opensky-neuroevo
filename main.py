@@ -2,6 +2,7 @@
 
 import logging
 import argparse
+import sys
 from evolution import load_airports, get_airport_by_iata, evolutionary_route
 from visualizer import plot_route_on_map, plot_evolution_on_map
 from synthetic_data import generate_storms, generate_flights
@@ -14,7 +15,19 @@ def main():
     parser = argparse.ArgumentParser(description="Gerar rotas usando algoritmo genético")
     parser.add_argument("origem", nargs="?", default="POA", help="IATA da origem")
     parser.add_argument("destino", nargs="?", default="GIG", help="IATA do destino")
+    parser.add_argument(
+        "--ui",
+        action="store_true",
+        help="Iniciar interface Streamlit em vez da execução via terminal",
+    )
     args = parser.parse_args()
+
+    if args.ui:
+        from streamlit.web import cli as stcli
+
+        sys.argv = ["streamlit", "run", "app.py"]
+        stcli.main()
+        return
 
     airports = load_airports()
     origem = args.origem.upper()
