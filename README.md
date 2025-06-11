@@ -83,11 +83,30 @@ pip install -r requirements.txt
 }
 ```
 
-4. Run the main pipeline:
+4. Launch the interactive explorer (Streamlit):
 
 ```bash
-python main.py
+streamlit run app.py
+# or
+python main.py --ui
 ```
+
+The Streamlit interface allows you to configure algorithm parameters
+and runs the evolutionary search entirely from the browser. Synthetic
+storms and example flights are generated automatically and used as
+"no‑fly" zones so the genetic algorithm can learn safer routes. After
+each run you can inspect the fitness progression and detailed metrics
+for every generation directly in the browser.
+
+Alternatively you can run everything from the command line:
+
+```bash
+python main.py POA GIG
+```
+
+This uses the same synthetic storms and flight paths to evolve the
+best route between the given airports and saves the resulting maps in
+`results/`.
 
 ---
 
