@@ -28,9 +28,8 @@ This project leverages live or historical flight data from the OpenSky Network t
 
 ## 🗺️ Example Output
 
-![Trajectory Plot](results/trajectory.png)
-
-You can also view the interactive map: [flight_map.html](results/flight_map.html)
+Example output is saved to a `results/` directory when you run the
+simulations. The interactive map `flight_map.html` will be generated there.
 
 ---
 
@@ -39,21 +38,14 @@ You can also view the interactive map: [flight_map.html](results/flight_map.html
 ```
 
 opensky-neuroevo/
-├── config/                  # API credentials and NEAT config
-│   ├── credentials.json
-│   └── neat_config.ini
-├── data/                   # Raw and processed datasets
-├── results/                # Simulation and visualization outputs
-├── src/                    # Source code
-│   ├── fetch_data.py
-│   ├── preprocess.py
-│   ├── flight_rl_env.py
-│   ├── neat_train.py
-│   ├── map_visualization.py
-│   └── environment_config.py
+├── data/              # Sample datasets
+├── app.py             # Streamlit interface
+├── evolution.py       # Genetic algorithm
+├── main.py            # CLI interface
+├── synthetic_data.py  # Data generation utilities
+├── visualizer.py      # Map plotting functions
 ├── requirements.txt
-├── README.md
-└── main.py
+└── README.md
 
 ```
 
@@ -74,16 +66,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Set up your OpenSky credentials in `config/credentials.json`:
-
-```json
-{
-  "clientId": "your-client-id",
-  "clientSecret": "your-client-secret"
-}
-```
-
-4. Launch the interactive explorer (Streamlit):
+3. Launch the interactive explorer (Streamlit):
 
 ```bash
 streamlit run app.py
