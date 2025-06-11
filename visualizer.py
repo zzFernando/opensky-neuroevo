@@ -1,3 +1,4 @@
+import os
 import folium
 import pandas as pd
 from typing import List, Tuple
@@ -51,6 +52,7 @@ def plot_route_on_map(
     flights: List[List[Tuple[float, float]]] | None = None,
 ) -> None:
     m = create_route_map(route, airports_df, zones=zones, flights=flights)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     m.save(filename)
     print(f"Mapa salvo em {filename}")
 
@@ -62,6 +64,7 @@ def plot_evolution_on_map(
     flights: List[List[Tuple[float, float]]] | None = None,
 ) -> None:
     m = create_evolution_map(routes_per_gen, airports_df, zones=zones, flights=flights)
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
     m.save(filename)
     print(f"Mapa da evolução salvo em {filename}")
 
