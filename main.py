@@ -3,7 +3,12 @@
 import logging
 import argparse
 import sys
-from evolution import load_airports, get_airport_by_iata, evolutionary_route
+from evolution import (
+    load_airports,
+    get_airport_by_iata,
+    evolutionary_route,
+    evaluate_route,
+)
 from visualizer import plot_route_on_map, plot_evolution_on_map
 from synthetic_data import generate_storms, generate_flights
 
@@ -43,22 +48,28 @@ def main():
         'lon_min': min(a1['Longitude'], a2['Longitude']) - 2,
         'lon_max': max(a1['Longitude'], a2['Longitude']) + 2,
     }
-    storms = generate_storms(2, bounds, (50, 100))
-    flights = generate_flights(3, bounds, n_points=6)
+    storms = generate_storms(2, start, end, (50, 100))
+    flights = generate_flights(3, start, end, n_points=6)
     zones = storms + [(lat, lon, 10) for path in flights for (lat, lon) in path]
     # Executa algoritmo evolutivo
     best_route, best_per_gen, _ = evolutionary_route(
         start,
         end,
         bounds,
-        n_waypoints=5,
+        max_waypoints=5,
         pop_size=40,
         generations=60,
         zones=zones,
     )
+    metrics = evaluate_route(best_route, zones)
     print("Melhor rota encontrada:")
     for i, wp in enumerate(best_route):
         print(f"WP{i}: {wp}")
+    print(
+        f"Distância: {metrics['distance']:.1f} km\n"
+        f"Penalização por ângulo: {metrics['angle_penalty']:.2f}\n"
+        f"Penalização por zonas: {metrics['zone_penalty']:.2f}"
+    )
     # Visualização
     plot_route_on_map(best_route, airports, zones=storms, flights=flights)
     plot_evolution_on_map(best_per_gen, airports, zones=storms, flights=flights)
