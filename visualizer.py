@@ -12,8 +12,20 @@ def create_route_map(
 ) -> folium.Map:
     lats = [p[0] for p in route]
     lons = [p[1] for p in route]
-    center = [sum(lats) / len(lats), sum(lons) / len(lons)]
+    if zones:
+        for lat, lon, _ in zones:
+            lats.append(lat)
+            lons.append(lon)
+    if flights:
+        for path in flights:
+            for lat, lon in path:
+                lats.append(lat)
+                lons.append(lon)
+    lat_min, lat_max = min(lats), max(lats)
+    lon_min, lon_max = min(lons), max(lons)
+    center = [(lat_min + lat_max) / 2, (lon_min + lon_max) / 2]
     m = folium.Map(location=center, zoom_start=6)
+    m.fit_bounds([[lat_min - 1, lon_min - 1], [lat_max + 1, lon_max + 1]])
     for _, row in airports_df.iterrows():
         folium.Marker(
             location=[row["Latitude"], row["Longitude"],],
@@ -79,8 +91,20 @@ def create_evolution_map(
         raise ValueError("Nenhuma rota para exibir.")
     lats = [p[0] for p in routes_per_gen[-1]]
     lons = [p[1] for p in routes_per_gen[-1]]
-    center = [sum(lats) / len(lats), sum(lons) / len(lons)]
+    if zones:
+        for lat, lon, _ in zones:
+            lats.append(lat)
+            lons.append(lon)
+    if flights:
+        for path in flights:
+            for lat, lon in path:
+                lats.append(lat)
+                lons.append(lon)
+    lat_min, lat_max = min(lats), max(lats)
+    lon_min, lon_max = min(lons), max(lons)
+    center = [(lat_min + lat_max) / 2, (lon_min + lon_max) / 2]
     m = folium.Map(location=center, zoom_start=6)
+    m.fit_bounds([[lat_min - 1, lon_min - 1], [lat_max + 1, lon_max + 1]])
     for _, row in airports_df.iterrows():
         folium.Marker(
             location=[row["Latitude"], row["Longitude"]],

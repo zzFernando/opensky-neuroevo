@@ -49,6 +49,7 @@ def run_evolution():
         zones=zones,
     )
     evals = [evaluate_route(r, zones) for r in best_per_gen]
+    final_metrics = evaluate_route(best_route, zones)
     st.session_state.result = {
         "best_per_gen": best_per_gen,
         "storms": storms,
@@ -56,6 +57,8 @@ def run_evolution():
         "zones": zones,
         "scores": scores,
         "evals": evals,
+        "best_route": best_route,
+        "final_metrics": final_metrics,
     }
 
 if st.button("Executar Evolução"):
@@ -63,6 +66,21 @@ if st.button("Executar Evolução"):
 
 if "result" in st.session_state:
     res = st.session_state.result
+    st.subheader("Melhor rota final")
+    best_metrics = res["final_metrics"]
+    st.markdown(
+        f"**Distância:** {best_metrics['distance']:.1f} km\n\n"
+        f"**Angulo penalização:** {best_metrics['angle_penalty']:.2f}\n\n"
+        f"**Zona penalização:** {best_metrics['zone_penalty']:.2f}"
+    )
+    m_best = create_route_map(
+        res["best_route"],
+        airports,
+        zones=res["storms"],
+        flights=res["flights"],
+    )
+    st_folium(m_best, width=1000, height=600)
+
     st.subheader("Evolução do fitness")
     st.line_chart(res["scores"])
     gen = st.slider(
