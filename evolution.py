@@ -136,6 +136,6 @@ def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generatio
     scored = [(ind, fitness(ind, zones)) for ind in pop]
     scored.sort(key=lambda x: x[1])
     best = scored[0][0]
-    best_per_gen.append(best)
-    best_scores.append(scored[0][1])
+    best_per_gen[-1] = best
+    best_scores[-1] = scored[0][1]
     return best, best_per_gen, best_scores

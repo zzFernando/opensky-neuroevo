@@ -79,7 +79,7 @@ if "result" in st.session_state:
         zones=res["storms"],
         flights=res["flights"],
     )
-    st_folium(m_best, width=1000, height=600)
+    st_folium(m_best, height=600, use_container_width=True, key="best_map")
 
     st.subheader("Rota por geração")
     gen = st.slider(
@@ -95,8 +95,13 @@ if "result" in st.session_state:
         f"**Angulo penalização:** {metrics['angle_penalty']:.2f}\n\n"
         f"**Zona penalização:** {metrics['zone_penalty']:.2f}"
     )
-    m_gen = create_route_map(route, airports, zones=res["storms"], flights=res["flights"])
-    st_folium(m_gen, width=1000, height=600)
+    m_gen = create_route_map(
+        route,
+        airports,
+        zones=res["storms"],
+        flights=res["flights"],
+    )
+    st_folium(m_gen, height=600, use_container_width=True, key="gen_map")
 
     st.subheader("Mapa da evolução")
     m_evo = create_evolution_map(
@@ -105,7 +110,7 @@ if "result" in st.session_state:
         zones=res["storms"],
         flights=res["flights"],
     )
-    st_folium(m_evo, width=1000, height=600)
+    st_folium(m_evo, height=600, use_container_width=True, key="evo_map")
 
     st.subheader("Evolução do fitness")
     st.line_chart(res["scores"])
