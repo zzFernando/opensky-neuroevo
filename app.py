@@ -21,7 +21,7 @@ destino = st.selectbox(
 st.sidebar.header("Parâmetros")
 num_storms = st.sidebar.slider("Número de tempestades", 0, 5, 2)
 num_flights = st.sidebar.slider("Número de outros voos", 0, 5, 3)
-n_waypoints = st.sidebar.slider("Waypoints", 3, 8, 5)
+max_waypoints = st.sidebar.slider("Máx waypoints", 3, 8, 5)
 pop_size = st.sidebar.slider("Tamanho da população", 10, 100, 40, step=10)
 generations = st.sidebar.slider("Gerações", 10, 100, 60, step=10)
 
@@ -43,7 +43,7 @@ def run_evolution():
         start,
         end,
         bounds,
-        n_waypoints=n_waypoints,
+        max_waypoints=max_waypoints,
         pop_size=pop_size,
         generations=generations,
         zones=zones,

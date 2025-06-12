@@ -56,7 +56,7 @@ def main():
         start,
         end,
         bounds,
-        n_waypoints=5,
+        max_waypoints=5,
         pop_size=40,
         generations=60,
         zones=zones,

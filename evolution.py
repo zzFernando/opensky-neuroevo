@@ -94,29 +94,60 @@ def random_waypoint(bounds):
     lon = random.uniform(bounds['lon_min'], bounds['lon_max'])
     return (lat, lon)
 
-def create_individual(start, end, n_waypoints, bounds):
-    waypoints = [random_waypoint(bounds) for _ in range(n_waypoints)]
+def create_individual(start, end, max_waypoints, bounds, min_waypoints=0):
+    """Create a random individual with a variable number of waypoints."""
+    n_wp = random.randint(min_waypoints, max_waypoints)
+    waypoints = [random_waypoint(bounds) for _ in range(n_wp)]
     return [start] + waypoints + [end]
 
-def mutate(ind, bounds, mutation_rate=0.2):
-    for i in range(1, len(ind)-1):
+def mutate(ind, bounds, mutation_rate=0.2, max_waypoints=5, min_waypoints=0):
+    """Mutate an individual by moving, adding or removing waypoints."""
+    i = 1
+    while i < len(ind) - 1:
         if random.random() < mutation_rate:
             ind[i] = random_waypoint(bounds)
+        # Optionally insert a new waypoint
+        if (
+            random.random() < mutation_rate / 2
+            and len(ind) - 2 < max_waypoints
+        ):
+            ind.insert(i, random_waypoint(bounds))
+            i += 1
+        # Optionally remove this waypoint
+        if (
+            random.random() < mutation_rate / 2
+            and len(ind) - 2 > min_waypoints
+        ):
+            ind.pop(i)
+            continue
+        i += 1
     return ind
 
 def crossover(parent1, parent2):
-    n = len(parent1)
-    cut = random.randint(1, n-2)
-    child = parent1[:cut] + parent2[cut:]
+    """One-point crossover for variable-length individuals."""
+    if len(parent1) <= 2 or len(parent2) <= 2:
+        return parent1[:] if random.random() < 0.5 else parent2[:]
+    cut1 = random.randint(1, len(parent1) - 2)
+    cut2 = random.randint(1, len(parent2) - 2)
+    child = parent1[:cut1] + parent2[cut2:]
     return child
 
-def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generations=50, zones: List[Tuple[float, float, float]] = None):
+def evolutionary_route(
+    start,
+    end,
+    bounds,
+    max_waypoints=5,
+    pop_size=30,
+    generations=50,
+    zones: List[Tuple[float, float, float]] | None = None,
+    min_waypoints=0,
+):
     """Evolve a route using a simple genetic algorithm.
 
     Returns the best route found, a list of the best route from each generation,
     and the corresponding fitness values for those routes.
     """
-    pop = [create_individual(start, end, n_waypoints, bounds) for _ in range(pop_size)]
+    pop = [create_individual(start, end, max_waypoints, bounds, min_waypoints) for _ in range(pop_size)]
     best_per_gen: List[List[tuple]] = []
     best_scores: List[float] = []
     for gen in range(generations):
@@ -130,7 +161,7 @@ def evolutionary_route(start, end, bounds, n_waypoints=5, pop_size=30, generatio
         while len(children) < pop_size:
             p1, p2 = random.sample(survivors, 2)
             child = crossover(p1, p2)
-            child = mutate(child, bounds)
+            child = mutate(child, bounds, max_waypoints=max_waypoints, min_waypoints=min_waypoints)
             children.append(child)
         pop = children
     scored = [(ind, fitness(ind, zones)) for ind in pop]
