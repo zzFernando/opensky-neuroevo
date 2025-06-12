@@ -36,8 +36,8 @@ def run_evolution():
         "lon_min": min(a1["Longitude"], a2["Longitude"]) - 2,
         "lon_max": max(a1["Longitude"], a2["Longitude"]) + 2,
     }
-    storms = generate_storms(num_storms, bounds, (50, 100))
-    flights = generate_flights(num_flights, bounds, n_points=6)
+    storms = generate_storms(num_storms, start, end, (50, 100))
+    flights = generate_flights(num_flights, start, end, n_points=6)
     zones = storms + [(lat, lon, 10) for path in flights for (lat, lon) in path]
     best_route, best_per_gen, scores = evolutionary_route(
         start,

@@ -48,8 +48,8 @@ def main():
         'lon_min': min(a1['Longitude'], a2['Longitude']) - 2,
         'lon_max': max(a1['Longitude'], a2['Longitude']) + 2,
     }
-    storms = generate_storms(2, bounds, (50, 100))
-    flights = generate_flights(3, bounds, n_points=6)
+    storms = generate_storms(2, start, end, (50, 100))
+    flights = generate_flights(3, start, end, n_points=6)
     zones = storms + [(lat, lon, 10) for path in flights for (lat, lon) in path]
     # Executa algoritmo evolutivo
     best_route, best_per_gen, _ = evolutionary_route(
