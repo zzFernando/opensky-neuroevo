@@ -79,7 +79,7 @@ if "result" in st.session_state:
         f"**Zona penalização:** {metrics['zone_penalty']:.2f}"
     )
     m = create_route_map(route, airports, zones=res["storms"], flights=res["flights"])
-    st_folium(m, width=700, height=500)
+    st_folium(m, width=1000, height=600)
     st.subheader("Métricas por geração")
     import pandas as pd
     df = pd.DataFrame(res["evals"]).assign(Geração=lambda d: d.index + 1)
