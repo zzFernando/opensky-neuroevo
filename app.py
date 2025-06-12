@@ -3,7 +3,7 @@ from streamlit_folium import st_folium
 
 from evolution import load_airports, get_airport_by_iata, evolutionary_route, evaluate_route
 from synthetic_data import generate_storms, generate_flights
-from visualizer import create_route_map
+from visualizer import create_route_map, create_evolution_map
 
 st.set_page_config(page_title="Route Evolution", layout="wide")
 st.title("✈️ Route Evolution Explorer")
@@ -81,8 +81,7 @@ if "result" in st.session_state:
     )
     st_folium(m_best, width=1000, height=600)
 
-    st.subheader("Evolução do fitness")
-    st.line_chart(res["scores"])
+    st.subheader("Rota por geração")
     gen = st.slider(
         "Geração",
         1,
@@ -96,8 +95,20 @@ if "result" in st.session_state:
         f"**Angulo penalização:** {metrics['angle_penalty']:.2f}\n\n"
         f"**Zona penalização:** {metrics['zone_penalty']:.2f}"
     )
-    m = create_route_map(route, airports, zones=res["storms"], flights=res["flights"])
-    st_folium(m, width=1000, height=600)
+    m_gen = create_route_map(route, airports, zones=res["storms"], flights=res["flights"])
+    st_folium(m_gen, width=1000, height=600)
+
+    st.subheader("Mapa da evolução")
+    m_evo = create_evolution_map(
+        res["best_per_gen"],
+        airports,
+        zones=res["storms"],
+        flights=res["flights"],
+    )
+    st_folium(m_evo, width=1000, height=600)
+
+    st.subheader("Evolução do fitness")
+    st.line_chart(res["scores"])
     st.subheader("Métricas por geração")
     import pandas as pd
     df = pd.DataFrame(res["evals"]).assign(Geração=lambda d: d.index + 1)
